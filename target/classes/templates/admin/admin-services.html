@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" th:fragment="container-fluid">
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/index">Home</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">Service</li>
+            </ol>
+        </nav>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">List Service</h6>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <div class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row" style="justify-content: end;padding-top: 10px;">
+                            <form th:action="@{/admin/searchBooking}" method="post" class=" navbar-search" style=";padding-bottom: 15px;">
+                                <div class="input-group" style="padding-right: 16px;">
+                                    <input name="searchText" type="text" class="form-control bg-light border-0 small" placeholder="Search for BKCode,Phone,Name..."
+                                           aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Service ID</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Service ID</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <tr th:each="service : ${servers}">
+                                        <td th:text="${service.id}">Booking ID</td>
+                                        <td th:text="${service.serviceName}">ServiceName</td>
+                                        <td th:text="${service.servicePrice}">Service Price</td>
+                                        <td style="max-width: 92px;text-align: center;">
+                                            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_MANAGER'')')}" style="display: inline-block;margin-right: 10px;">
+                                                <a th:href="@{/admin/showFormUpdateService(serviceId=${service.id})}" class="btn btn-info btn-sm">
+                                                    Update
+                                                </a>
+                                            </div>
+                                            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="display: inline-block;">
+                                                <a th:href="@{/admin/deleteService(serviceId=${service.id})}"
+                                                   class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this ticket?')))return false">
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="justify-content: center;">
+
+                            <div th:if="${totalPage != null}" class="col-sm-12 col-md-7" style="display: flex;;justify-content: center;">
+                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous" id="dataTable_previous">
+                                            <a th:if="${currentPage > 1}" th:href="@{'?pageNo='+${currentPage-1}}"  class="page-link">Previous
+                                            </a>
+                                        </li>
+                                        <li class="paginate_button page-item " th:each="i : ${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                                            <a th:href="${searchText == null ? '/admin/services/?pageNo='+i : '/admin/searchBooking/?pageNo='+i + '&searchText='+searchText}"  class="page-link" th:text="${i}">1</a>
+                                        </li>
+
+                                        <li class="paginate_button page-item next" id="dataTable_next">
+                                            <a th:if="${currentPage < totalPage}" th:href="@{'?pageNo='+${currentPage+1}}"  class="page-link">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a
+                                href="/profile">Profile</a></span>
+
+                        </p>
+                        <h1 class="mb-4 bread">Edit Profile</h1>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="text-center">
+                    <img th:src="${user.userImg ==null ? '/images/avatar.jpg' : '/images/userImg/'+ user.userImg}" class="avatar img-circle img-thumbnail" alt="avatar">
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <form th:action="@{/updateProfile}"
+                      th:object="${user}" method="POST" enctype="multipart/form-data" >
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{userImg}"/>
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Edit Profile</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels" for="firstName">First Name</label><input type="text" th:field="*{firstName}" class="form-control" placeholder="First name" id="firstName" name="firstName"><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></div>
+                            <div class="col-md-6"><label class="labels" for="lastName">Last Name</label><input th:field="*{lastName}" name="lastName" id="lastName" type="text" class="form-control" placeholder="Last name"><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels" for="phoneNumber">Mobile Number</label><input th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber" type="text" class="form-control" placeholder="Enter phone number" ><span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span></div>
+                            <div class="col-md-12"><label class="labels" for="address">Address</label><input th:field="*{address}" name="address" id="address" type="text" class="form-control" placeholder="Enter address" ><span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span></div>
+                            <div class="col-md-12"><label class="labels" for="image">Avartar</label><input type="file" name="image" id="image" accept="image/*" class="form-control"></div>
+                        </div>
+
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

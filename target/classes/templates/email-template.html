@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Template</title>
+</head>
+<body>
+<p>Dear <span th:text="${nameUser}"></span></p>
+<p>Chúng tôi xác nhận rằng bạn đã đặt phòng thành công với mã số đặt phòng: <span th:text="${bookingCode}"></span></p>
+<p>Thông tin đặt phòng :</p>
+<table>
+    <tr>
+        <td><p>Người đặt phòng : </p></td>
+        <td><span th:text="${nameUser}"></span></td>
+    </tr>
+    <tr>
+        <td><p>Tên phòng đặt : </p></td>
+        <td><span th:text="${titleRoom}"></span></td>
+    </tr>
+    <tr>
+        <td><p>Checkin - checkout : </p></td>
+        <td><span th:text="${checkin} + ' - ' + ${checkout}"></span></td>
+    </tr>
+    <tr>
+        <td><p>Tổng tiền : </p></td>
+        <td><span th:text="${totalPrice}"></span></td>
+    </tr>
+</table>
+<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+
+</body>
+</html>

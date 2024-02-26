@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    <link th:href="@{/css/rating.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="/">Home</a></span> <span class="mr-2"><a href="/rooms">Room</a></span>
+                            <span>Room Single</span></p>
+                        <h1 class="mb-4 bread">Room Single</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="ftco-section">
+        <div class="container" th:if="${room != null }">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-12 ftco-animate">
+                            <h2 class="mb-4" th:text="${room.title}"></h2>
+                            <div class="single-slider owl-carousel">
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
+                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the
+                                skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of
+                                her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she
+                                continued her way.</p>
+                            <div class="d-md-flex mt-5 mb-5">
+                                <ul class="list">
+                                    <li><span>Max:</span> <span th:text="${room.roomMax}"></span> Persons</li>
+                                    <li><span>Size:</span> <span th:text="${room.roomSize}"></span> m2</li>
+                                </ul>
+                                <ul class="list ml-md-5">
+                                    <li><span>View:</span> <span th:text="${room.type}"></span></li>
+                                    <li><span>Bed:</span> <span th:text="${room.roomBed}"></span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 room-single ftco-animate mb-5 mt-4">
+                            <h3 class="mb-4">Take A Tour</h3>
+                            <div class="block-16">
+                                <figure>
+                                    <img src="images/room-4.jpg" alt="Image placeholder" class="img-fluid">
+                                    <a href="https://vimeo.com/45830194" class="play-button popup-vimeo"><span
+                                            class="icon-play"></span></a>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 properties-single ftco-animate mb-5 mt-4">
+                            <h4 class="mb-4">Review &amp; Ratings</h4>
+                            <form class="p-5 bg-light" th:action="@{/ratings/add}" method="POST">
+                                <input type="hidden" name="roomId" th:value="${room.id}" />
+                                <div class="rating">
+
+                                    <div class="star-group">
+                                        <input type="radio" id="star1" name="evaluationScore" value="1" hidden>
+                                        <label for="star1" class="star"><i class="fas fa-star"></i></label>
+
+                                        <input type="radio" id="star2" name="evaluationScore" value="2" hidden>
+                                        <label for="star2" class="star"><i class="fas fa-star"></i></label>
+                                        <input type="radio" id="star3" name="evaluationScore" value="3" hidden>
+                                        <label for="star3" class="star"><i class="fas fa-star"></i></label>
+                                        <input type="radio" id="star4" name="evaluationScore" value="4" hidden>
+                                        <label for="star4" class="star"><i class="fas fa-star"></i></label>
+                                        <input type="radio" id="star5" name="evaluationScore" value="5" hidden>
+                                        <label for="star5" class="star"><i class="fas fa-star"></i></label>
+                                    </div>
+                                </div>
+                                <h5>Message :</h5>
+                                <label for="comment"></label>
+                                <textarea id="comment" name="comment" cols="30" rows="4" class="form-control" required></textarea>
+                                <div style="display: flex;justify-content: flex-end;">
+                                    <button id="submit" type="submit" class="btn btn-primary" style="margin: 15px 15px;">Comment</button>
+                                </div>
+
+                            </form>
+                            <h4 th:utext="'Number of Ratting: ' + ${#lists.size(room.ratings)}" style="padding: 21px 0px;"></h4>
+
+                            <ul class="comment-list">
+
+                                <li  th:each="rating : ${room.ratings}">
+
+
+
+                                            <div class="vcard bio">
+                                                <img  th:src="${'/images/userImg/'+ rating.user.userImg}" alt="#" style="width: 50px;border-radius: 50%;object-fit: fill;height: 50px;">
+                                            </div>
+                                           <div class="comment-body">
+
+                                            <h3 th:text="${rating.user}"></h3>
+                                            <span th:remove="tag" th:each="star, starStat : ${#numbers.sequence(1, rating.evaluationScore)}">
+                                            <label class="star-output"><i class="fas fa-star"></i></label></span>
+                                            <div class="meta" th:text="${rating.createdAt}"></div>
+                                            <p th:utext="${rating.comment}"></p>
+                                               <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_MANAGER'')')}">
+                                                   <form th:action="@{'/ratings/delete/' + ${rating.id}}" method="post">
+                                                       <input type="hidden" name="roomId" th:value="${room.id}" />
+                                                       <button type="submit" class="btn btn-danger">Delete</button>
+                                                   </form>
+                                               </div>
+                                           </div>
+
+                                </li>
+                            </ul>
+                                         </div>
+
+
+                            </ul>
+
+                            <div th:if="${totalPage != null}" class="col-sm-12 col-md-7" style="display: flex;;justify-content: center;">
+                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous" id="dataTable_previous">
+                                            <a th:if="${currentPage > 1}" th:href="@{'?pageNo='+${currentPage-1}}"  class="page-link">Previous
+                                            </a>
+                                        </li>
+                                        <li  class="paginate_button page-item " th:each="i : ${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                                            <a th:href="${searchText == null ? '/ratings/list-comment/?pageNo='+i : '/admin/searchRoom/?pageNo='+i + '&searchText='+searchText}"  class="page-link" th:text="${i}">1</a>
+                                        </li>
+
+                                        <li class="paginate_button page-item next" id="dataTable_next">
+                                            <a th:if="${currentPage < totalPage}" th:href="@{'?pageNo='+${currentPage+1}}"  class="page-link">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box">
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 sidebar">
+                        <div class="sidebar-wrap bg-light ftco-animate">
+                            <h6 style="font-size: 30px" class="heading mb-4">Check Now!</h6>
+                            <form th:action="@{/checkAvailableByRoom}" method="post">
+                                <div class="fields" th:if="${room != null }" >
+                                    <input type="hidden" name="roomId" th:value="${room.id}">
+                                    <div class="form-group">
+                                        <input type="text" name="checkinDate" id="checkinDate" class="form-control checkin_date"
+                                               placeholder="Check In Date" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="checkoutDate" id="checkoutDate" class="form-control checkout_date"
+                                               placeholder="Check Out Date" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="select-wrap one-third">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select name="roomQuantity" id="" class="form-control">
+                                                <option value="1">1 Room</option>
+                                                <option value="2">2 Room</option>
+                                                <option value="3">3 Room</option>
+                                                <option value="4">4 Room</option>
+                                                <option value="5">5 Room</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary py-3 px-5" type="submit">Check Available</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+    </section> <!-- .section -->
+
+
+    <section class="instagram pt-5">
+        <div class="container-fluid">
+            <div class="row no-gutters justify-content-center pb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2><span>Instagram</span></h2>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-1.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-1.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-2.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-2.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-3.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-3.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-4.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-4.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-5.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-5.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const stars = document.querySelectorAll('.rating i');
+            const starRating = document.getElementById('starRating');
+            const form = document.querySelector(".bg-light");
+            const ratingRadios = document.querySelectorAll('input[name="evaluationScore"]');
+            const commentInput = document.querySelector("#comment");
+
+
+            let selectedRating = 0;
+            let commentText = '';
+
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseover', () => {
+                    highlightStars(index);
+                });
+
+                star.addEventListener('mouseout', () => {
+                    highlightStars(selectedRating - 1);
+                });
+
+                star.addEventListener('click', () => {
+                    selectedRating = index + 1;
+                    highlightStars(index);
+                });
+            });
+
+            commentInput.addEventListener('input', () => {
+                commentText = commentInput.value;
+            });
+
+            function highlightStars(index) {
+                stars.forEach((star, i) => {
+                    if (i <= index) {
+                        star.classList.remove('far');
+                        star.classList.add('fas');
+                        star.style.color = '#d35f06';
+                    } else {
+                        star.classList.remove('fas');
+                        star.classList.add('far');
+                        star.style.color = '#d35f06';
+                    }
+                });
+
+                starRating.innerHTML = '';
+                for (let i = 0; i <= index; i++) {
+                    const starIcon = document.createElement('i');
+                    starIcon.classList.add('fas', 'fa-star');
+                    starIcon.style.color = 'gold';
+                    starRating.appendChild(starIcon);
+                }
+            }
+
+            form.addEventListener("submit", function(event) {
+                if (!isRatingSelected()) {
+                    alert('Vui lòng chọn đánh giá trước khi gửi.');
+                    event.preventDefault(); // Ngăn chặn việc gửi form nếu đánh giá chưa được chọn.
+                } else if (commentInput.value.trim() === '') {
+                    alert('Vui lòng nhập bình luận trước khi gửi.');
+                    event.preventDefault(); // Ngăn chặn việc gửi form nếu bình luận trống.
+                }
+            });
+
+            function isRatingSelected() {
+                for (const radio of ratingRadios) {
+                    if (radio.checked) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        
+    </script>
+</div>
+</body>
+</html>

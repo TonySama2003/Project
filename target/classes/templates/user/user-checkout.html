@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+        <link rel="stylesheet" th:href="@{/css/checkout.css}">
+</head>
+<body>
+
+
+    <div class="checkout-container">
+        <div class="left-side" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'">
+            <div class="text-box">
+                <h1 class="home-heading" th:text="${room.title}"></h1>
+                <p class="home-price"><em><span th:text="${room.priceOneNight}"></span> USD </em>/ 1 night</p>
+                <hr class="left-hr" />
+                <p class="home-desc"><em>One room </em>for <em>2 guests</em></p>
+                <p class="home-desc">
+                    <em><span th:text="${booking.getCheckinDate()}"></span> </em>to <em><span th:text="${booking.getCheckoutDate()}"></span></em>
+                </p>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="receipt">
+                <h2 class="receipt-heading">Receipt Summary</h2>
+                <div>
+                    <table class="table">
+                        <tr>
+                            <td><span th:text="${room.priceOneNight}"></span>$ x <span th:text="${noDate}"></span>nights x <span th:text="${booking.getRoomQuantity()}"></span>rooms</td>
+                            <td class="price"><span th:text="${room.priceOneNight*noDate*booking.getRoomQuantity()}"></span> USD</td>
+                        </tr>
+                        <tr>
+                            <td>Discount</td>
+                            <td class="price">0.00 USD</td>
+                        </tr>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td class="price"><span th:text="${totalAllService}"></span> USD</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td class="price">0 USD</td>
+                        </tr>
+                        <tr class="total">
+                            <td>Total</td>
+                            <td class="price"><span th:text="${totalPrice}"></span> USD</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="payment-info">
+                <h3 class="payment-heading">Your reservation is confirmed !</h3>
+                <div>
+                    <button class="btn"><a href="/" class="btn">Return to home </a></button>
+                    <button class="btn"><a href="/showBookings" class="btn">Check your reservation</a></button>
+                </div>
+
+                <p class="footer-text">
+                    <i class="fa-solid fa-lock"></i>
+                    Additional information will be send to your email
+                </p>
+                <p class="receipt"> </p>
+            </div>
+            <h4 class="note"> Notes </h4>
+            <p  class="note-desc"> For more information on refunding</p>
+            <a class="cvv-info" href="/about">Click here to see our refund policy</a>
+        </div>
+    </div>
+
+
+</body>
+</html>

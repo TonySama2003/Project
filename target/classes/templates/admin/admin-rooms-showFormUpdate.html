@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" th:fragment="container-fluid">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/index">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/rooms">Room</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Create Room</li>
+            </ol>
+        </nav>
+        <h3>Room Directory</h3>
+        <hr/>
+        <p class="h4 mb-4">Create Room</p>
+        <form th:action="@{/admin/updateRoom}"
+              th:object="${room}" method="POST" enctype="multipart/form-data" >
+            <input type="hidden" th:field="*{id}"/>
+            <div>
+                <label for="title">Room Title :</label>
+                <input type="text" th:field="*{title}" id="title" name="title" class="form-control mb-4 col-4" placeholder="Title">
+                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+            </div>
+            <div>
+                <label for="type">Room Type:</label>
+                <select th:field="*{type}" name="type" id="type" class="form-control mb-4 col-4">
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Excutive">Excutive</option>
+                    <option value="Terrace">Terrace</option>
+                    <option value="President">President</option>
+                </select>
+                <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+            </div>
+            <div>
+                <label for="description">Room Desciption :</label>
+                <input type="text" name="description" id="description" th:field="*{description}" class="form-control mb-4 col-4" placeholder="Description">
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            </div>
+            <div>
+                <label for="image">Room IMG :</label>
+                <input type="file" name="image" id="image" accept="image/*" style="display: block" />
+            </div>
+            <div>
+                <label for="availableRoom">Room Available :</label>
+                <input type="text" th:field="*{availableRoom}" id="availableRoom" name="availableRoom" class="form-control mb-4 col-4" placeholder="Available">
+                <span th:if="${#fields.hasErrors('availableRoom')}" th:errors="*{availableRoom}"></span>
+            </div>
+            <div>
+                <label for="roomMax">Room person :</label>
+                <input type="text" th:field="*{roomMax}"id="roomMax" name="roomMax" class="form-control mb-4 col-4" placeholder="Max-person">
+                <span th:if="${#fields.hasErrors('roomMax')}" th:errors="*{roomMax}"></span>
+            </div>
+            <div>
+                <label for="roomSize">Room size :</label>
+                <input type="text" th:field="*{roomSize}" id="roomSize" name="roomSize" class="form-control mb-4 col-4" placeholder="Room-size">
+                <span th:if="${#fields.hasErrors('roomSize')}" th:errors="*{roomSize}"></span>
+            </div>
+            <div>
+                <label for="roomBed">Room Bed :</label>
+                <input type="text" th:field="*{roomBed}" id="roomBed" name="roomBed" class="form-control mb-4 col-4" placeholder="Room-bed">
+                <span th:if="${#fields.hasErrors('roomBed')}" th:errors="*{roomBed}"></span>
+            </div>
+            <div>
+                <label for="priceOneNight">Room Price :</label>
+                <input type="text" th:field="*{priceOneNight}" id="priceOneNight" name="priceOneNight" class="form-control mb-4 col-4" placeholder="Price">
+                <span th:if="${#fields.hasErrors('priceOneNight')}" th:errors="*{priceOneNight}"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-info col-2">Save</button>
+        </form>
+        <hr/>
+        <a th:href="@{/admin/rooms}">Back to Room List</a>
+    </div>
+</div>
+</body>
+</html>

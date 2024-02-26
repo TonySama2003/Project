@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" th:fragment="container-fluid">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/index">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/users">User</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">User Detail</li>
+            </ol>
+        </nav>
+        <h1>User Details</h1>
+
+        <form th:action="@{/admin/updateRoleUser}" method="post" >
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userRole : ${userRoles}">
+                    <td th:text="${userRole.appUser.id}"></td>
+                    <td th:text="${userRole.appUser.firstName + ' ' + userRole.appUser.lastName}"></td>
+                    <td th:text="${userRole.appUser.email}"></td>
+                    <td>
+                        <input type="hidden" name="userRoleId" th:value="${userRole.id}" />
+                        <select name="roleId">
+                            <option value="1" th:selected="${userRole.role.roleId == 1}">ROLE_ADMIN</option>
+                            <option value="2" th:selected="${userRole.role.roleId == 2}">ROLE_USER</option>
+                            <option value="3" th:selected="${userRole.role.roleId == 3}">ROLE_MANAGE</option>
+                        </select>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-info col-2" style="float: right;">Update Roles</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

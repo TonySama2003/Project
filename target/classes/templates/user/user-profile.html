@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="/">Home</a></span> <span class="mr-2"><a
+                                href="/profile">Profile</a></span>
+
+                        </p>
+                        <h1 class="mb-4 bread">My Profile</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container emp-profile">
+
+            <div class="row">
+                <div class="col-md-4 profileLeft">
+                    <div class="profile-img">
+                        <div class="content_img">
+                            <img th:src="${user.userImg ==null ? '/images/avatar.jpg' : '/images/userImg/'+ user.userImg}" alt=""/>
+                        </div>
+
+                        <a th:href="@{/showEditProfile(userId=${user.id})}" class="profile-edit-btn">
+                            Edit Profile
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h3>
+                            <span th:text="${user.firstName}+' '+${user.lastName}"></span>
+                        </h3>
+                        <h6>
+                            Premium Client
+                        </h6>
+                        <p class="proile-rating">Created : <span th:text="${#dates.format(user.createDate, 'MMMM, dd yyyy')}"></span></p>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Booking</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>User Id</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span th:text="${user.id}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span th:text="${user.firstName}+' '+${user.lastName}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span th:text="${user.email}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span th:text="${user.phoneNumber}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Address</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span th:text="${user.address}"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Booking</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>List</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Room</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>(room type)</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Checkin</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Date</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Checkout</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Date</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Availability</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>6 months</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+    </div>
+
+
+
+</div>
+
+</body>
+
+</html>

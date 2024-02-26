@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" th:fragment="container-fluid">
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/index">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/bookings">Booking</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">Booking Detail</li>
+            </ol>
+        </nav>
+        <h3>Booking Code : <span th:text="${booking.bookingCode}"></span></h3>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-gray">
+            <tr>
+                <th>Room</th>
+                <th>Check-in Date</th>
+                <th>Checkout Date</th>
+                <th>Number Guest</th>
+                <th>Room Quantity</th>
+                <th>Service</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bookingDetail : ${booking.bookingDetails}">
+
+                <td th:text="${bookingDetail.room.title}">Room</td>
+                <td th:text="${bookingDetail.checkinDate}">Check-in Date</td>
+                <td th:text="${bookingDetail.checkoutDate}">Checkout Date</td>
+                <td th:text="${bookingDetail.numberGuest}">Number Guest</td>
+                <td th:text="${bookingDetail.roomQuantity}">Room Quantity</td>
+                <td style="padding-left: 23px;">
+                    <div th:if="${bookingDetail.bookingDetailServicesHotels.size() != 0 }">
+                        <ul>
+
+                            <li th:each="service : ${bookingDetail.bookingDetailServicesHotels}" th:text="${service.serviceHotel.serviceName}" style="list-style-type: decimal;
+    padding-left: 5px;
+    /* display: table-cell; */
+    white-space: nowrap;"></li>
+                        </ul>
+                    </div>
+                    <div th:unless="${bookingDetail.bookingDetailServicesHotels.size() != 0}">
+                        <p>Không có dịch vụ được chọn</p>
+                    </div>
+                </td>
+                <td th:text="${bookingDetail.totalPrice}">Total Price</td>
+                <td th:text="${bookingDetail.status}">Status</td>
+
+                <td>
+                    <form th:action="@{/admin/bookingdetails/updateStatus}" method="post">
+                        <input type="hidden" name="bookingDetailId" th:value="${bookingDetail.id}" />
+
+                        <select name="status">
+                            <option value="Wait for confirmation">Wait for confirmation</option>-->
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Payment Pending">Payment Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Finished">Finished</option>
+                            <option value="Cancel Booking">Cancel Booking</option>
+<!--                            <option value="Chờ xác nhận">Wait for confirmation</option>-->
+<!--                            <option value="Đã xác nhận">Confirmed</option>-->
+<!--                            <option value="Chưa thanh toán">Payment Pending</option>-->
+<!--                            <option value="Đã thanh toán">Paid</option>-->
+<!--                            <option value="Hoàn thành">Finished</option>-->
+<!--                            <option value="Hủy Booking">Cancel Booking</option>-->
+<!--                            <option value="yeu cau huy">Cancel Booking Pending</option>-->
+                        </select>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to change this status?')))return false">Update</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

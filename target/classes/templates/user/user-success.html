@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="rooms.html">Checkout</a></span>
+                            <span>Check out</span></p>
+                        <h1 class="mb-4 bread">Check out</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-success" role="alert" th:if="${messages}">
+        <p th:text="${messages}"></p>
+    </div>
+    <div>
+        <a href="/">Back to Home !</a>
+    </div>
+
+</div>
+</body>
+</html>

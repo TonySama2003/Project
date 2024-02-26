@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="/">Home</a></span> <span class="mr-2"><a
+                                href="/showBookings">Booking</a></span>
+                            <span>Booking</span>
+                        </p>
+                        <h1 class="mb-4 bread">Booking</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bookingContent">
+        <div class="content-left" style="width: 90%;">
+            <div class="inforBooking">
+                <h2 style="color: #8d703b;">Thông tin booking  </h2>
+                <div class="wraper" style="color: #8d703b;">
+                    <table class="table table-bordered table hover">
+
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Booking Code</th>
+                            <th>User :</th>
+
+                            <th>Checkin - checkout</th>
+                            <th>Room</th>
+                            <th>Service</th>
+                            <th>Total Price</th>
+                            <th>Status </th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${bookings}">
+                            <td th:text="${booking.bookingCode}">Booking </td>
+                            <td th:text="${booking.appUser.firstName+' '+booking.appUser.lastName}">Booking ID</td>
+
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" th:text="${bookingdetail.checkinDate+' To '+bookingdetail.checkoutDate}"></td>
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" th:text="${bookingdetail.room.title}"></td>
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" style="padding-left: 23px;">
+                                <div th:if="${bookingdetail.bookingDetailServicesHotels.size() != 0 }">
+                                    <ul>
+
+                                        <li th:each="service : ${bookingdetail.bookingDetailServicesHotels}" th:text="${service.serviceHotel.serviceName}" style="list-style-type: initial;padding-left: 5px;white-space: nowrap;"></li>
+                                    </ul>
+                                </div>
+                                <div th:unless="${bookingdetail.bookingDetailServicesHotels.size() != 0}">
+                                    <p>none</p>
+                                </div>
+                            </td>
+                            <td th:text="${booking.totalPrice}">Total Price</td>
+                            <td th:each="bookingDetail : ${booking.bookingDetails}"
+                                    th:text="${bookingDetail.status}">status</td>
+                            <td>
+                                <a th:href="@{'/bookingCancel/' + ${booking.id}}" th:text="'Cancel'" onclick="if (!(confirm('Are you sure you want to cancel this booking?')))return false" style="color: #ffb952;">Cancel</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" style="justify-content: center;">
+                        <div class="col text-center" >
+                            <div class="block-27" id="dataTable_paginate">
+                                <ul >
+                                    <li  id="dataTable_previous">
+                                        <a th:if="${currentPage > 1}" th:href="@{'?pageNo='+${currentPage-1}}"  ><
+                                        </a>
+                                    </li>
+                                    <li  th:each="i : ${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                                        <a th:href="@{'?pageNo='+${i}}"   th:text="${i}">1</a>
+                                    </li>
+
+                                    <li  id="dataTable_next">
+                                        <a th:if="${currentPage < totalPage}" th:href="@{'?pageNo='+${currentPage+1}}"  >></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+
+    </script>
+    <script
+        th:if="${cancelMessage != ''}">
+            showAlert("[[${cancelMessage}]]");
+
+    </script>
+</div>
+</body>
+</html>

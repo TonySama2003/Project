@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/login/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/login/css/sb-admin-2.min.css}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary" style="background-color: #ffffff;
+    background-image: linear-gradient(180deg,#fefeff 10%,#a2b0d8 100%);
+    background-size: cover;">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form class="user" th:action="@{/register}" th:object="${registrationForm}" method="post">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control form-control-user"
+                                           placeholder="First Name">
+                                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="form-control form-control-user"
+                                           placeholder="Last Name">
+                                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="email" name="email" th:field="*{email}" class="form-control form-control-user"
+                                       placeholder="Email Address">
+                                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="password" id="password" name="password" th:field="*{password}" class="form-control form-control-user"
+                                            placeholder="Password">
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}" class="form-control form-control-user"
+                                            placeholder="Repeat Password">
+                                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control form-control-user"
+                                           placeholder="Phone Number">
+                                    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="date" id="dateOfBirth" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-user"
+                                           placeholder="Date Of Birth">
+                                    <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="address" name="address" th:field="*{address}" class="form-control form-control-user"
+                                       placeholder="Address">
+                                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                            </div>
+                            <div class="form-group"><input name="submit" style="font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 0.75rem 13.3rem;" type="submit" value="Register Account" /></div>
+                            <hr>
+                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Register with Google
+                            </a>
+                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                            </a>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="login.html">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/login/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/login/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/login/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/login/js/sb-admin-2.min.js}"></script>
+
+</body>
+
+</html>

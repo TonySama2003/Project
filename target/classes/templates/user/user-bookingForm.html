@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a
+                                href="rooms.html">Booking</a></span>
+                            <span>Room Single</span>
+                        </p>
+                        <h1 class="mb-4 bread">Booking</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bookingContent">
+        <div class="content-left">
+            <div class="inforBooking">
+                <h2>Booking Details </h2>
+                <div class="wraper">
+                    <!-- Hiển thị thông tin booking -->
+                    <p><Strong>Customer's name:</Strong> <span th:text="${user.firstName}"></span></p>
+                    <p><Strong>Email:</Strong> <span th:text="${user.email}"></span></p>
+                    <p><Strong>Contact number:</Strong> <span th:text="${user.phoneNumber}"></span></p>
+                    <p style="display: none">Booking ID: <span th:text="${booking.getRoomId()}"></span></p>
+                    <p><Strong>Room type :</Strong> <span th:text="${room.title}"></span></p>
+                    <p><Strong>Checkin date:</Strong> <span th:text="${booking.getCheckinDate()}"></span></p>
+                    <p><Strong>Checkout date:</Strong> <span th:text="${booking.getCheckoutDate()}"></span></p>
+                    <p><Strong>Number of room :</Strong> <span th:text="${booking.getRoomQuantity()}"></span></p>
+                    <p><Strong>Number of guest :</Strong> <span th:text="${booking.getNumberGuest()}"></span></p>
+                    <!-- Hiển thị thông tin người dùng -->
+                    <p style="margin-top: 15px;"><Strong>Total (not include service) :</Strong> $<span th:text="${totalPriceRoom}"
+                                                                                      name="totalPriceRoom"></span></p>
+                </div>
+
+            </div>
+            <div class="infoService">
+                <h2>Services:</h2>
+                <div class="wraper">
+                    <!-- Danh sách dịch vụ -->
+                    <form th:action="@{/checkout}" method="post" th:object="${serviceForm}">
+
+                        <ul>
+                            <li th:each="tempService : ${services}">
+                                <label>
+                                    <input type="checkbox" th:field="*{selectedServices}" th:value="${tempService.id}" th:text="${tempService.serviceName}"/>
+                                    <br />
+                                    <span><Strong><span>Price </span></Strong> - $<span name="servicePrice${tempService.id}" th:text="${tempService.servicePrice}"></span></span>
+
+                                    <input disabled type="number" th:field="*{serviceQuantities}" name="serviceQuantity+${tempService.id}"
+                                           placeholder="Quanity" min="0" data-checkbox="${tempService.id}" />
+
+                                    <span><Strong><span>Total : </span></Strong> $<span name="totalServicePrice${tempService.id}">
+                      </span></span>
+                                    <!--                            <input type="hidden" th:field="*{totalServicePrices}" name="totalServicePrice1" value="0.00" />-->
+                                </label>
+                            </li>
+
+                            <!-- Thêm các checkbox cho các dịch vụ khác -->
+                        </ul>
+                        <div class="devideStyleWraper">
+                            <div class="devidestyle"></div>
+                        </div>
+                        <div class="totalPrice">
+                            <!-- Tổng giá tiền -->
+                            <input type="hidden" id="totalPriceField" name="totalPrice" value="0.00" />
+                            <input type="hidden" id="totalAllService" name="totalAllService" th:value="${noDate}" />
+                            <p><u><Strong>Total Price:</Strong></u> $<span id="totalPrice">0.00</span></p>
+                        </div>
+
+                        <div class="submitButton">
+                            <!-- Nút xác nhận -->
+                            <button type="submit">Book now</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="infoRoom">
+                <div class="imgRoom">
+                    <img th:src="@{'/images/roomImg/'+${room.roomImg}}"
+                         style="width: 150px;height: 150px;border-radius: 3px;">
+                </div>
+
+                <div class="infomationRoom">
+                    <div class="contentRoom">
+                        <div class="contentRoom_header">
+
+                            <div class="contentRoom_header1_info1">
+                                <span>No-cost Refund</span>
+                            </div>
+                            <div class="contentRoom_header1_info2">
+                                <span>Flash Sales</span>
+                            </div>
+
+                        </div>
+                        <p><span th:text="${room.title}"></span></p>
+                        <div class="contentRoom_body">
+                            <p>Room type : <span th:text="${room.type}"></span></p>
+                            <p>Room size : <span th:text="${room.roomSize}"></span></p>
+                            <p>Number of bed : <span th:text="${room.roomBed}"></span></p>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="footerRoom">
+            <span class="footerRoomTitle">
+              High demanding!
+            </span>&nbsp;&nbsp;
+                    <span class="footerRoomContent">
+              2 of the rooms just got booked! Book now before missing your chance!
+            </span>
+                </div>
+            </div>
+            <div class="infoBill">
+                <div class="infoBill_title">
+                    <div class="title_content">
+                        <span>CHEAPEST PRICE</span>
+                    </div>
+
+                </div>
+                <div class="infoBillBooking">
+                    <div class="datecheckin_checkout">
+                        <h4><span th:text="${booking.getCheckinDate()}"></span>-<span
+                                th:text="${booking.getCheckoutDate()}"></span></h4>
+
+                    </div>
+                    <div class="noDate">
+                        <span>1 Night</span>
+                    </div>
+                </div>
+                <div class="devideStyleWraper">
+                    <div class="devidestyle"></div>
+                </div>
+                <div class="infoBill_body">
+                    <div class="infoBill_body_left">
+                        <span>Free</span>
+                    </div>
+                    <div class="infoBill_body_right">
+                        <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">
+                            <div spacing="S" data-section="occupancy" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 ibyDZc">
+                                    <defs>
+                                        <path id="adults_24px-a"
+                                              d="M10.496 10.009a2.5 2.5 0 0 0-2.5 2.5v3.1a.5.5 0 0 0 .153.36l1.645 1.584a1.5 1.5 0 0 1 .434.806l.607 3.26a.5.5 0 0 0 .492.408h1.35a.5.5 0 0 0 .491-.407l.622-3.271a1.5 1.5 0 0 1 .446-.813l1.611-1.515a.5.5 0 0 0 .158-.364V12.51a2.5 2.5 0 0 0-2.5-2.5h-3.01zm0-1h3.009a3.5 3.5 0 0 1 3.5 3.5v3.148a1.5 1.5 0 0 1-.473 1.093l-1.61 1.514a.5.5 0 0 0-.15.271l-.622 3.272a1.5 1.5 0 0 1-1.473 1.22h-1.35A1.5 1.5 0 0 1 9.852 21.8l-.607-3.259a.5.5 0 0 0-.144-.268l-1.646-1.585a1.5 1.5 0 0 1-.46-1.08v-3.1a3.5 3.5 0 0 1 3.5-3.5zM12 7.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z">
+                                        </path>
+                                    </defs>
+                                    <use xlink:href="#adults_24px-a"></use>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">1 room, 2 adults</div>
+                            </div>
+                            <div spacing="S" data-section="max-occupancy" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 ibyDZc">
+                                    <path
+                                            d="M16.475 17.5H15.18l-.5 5.004a.5.5 0 0 1-.498.45H9.818a.5.5 0 0 1-.497-.45l-.5-5.004H7.524l-.21 2.095a.5.5 0 0 1-.497.45H3.182a.5.5 0 0 1-.498-.45l-.41-4.095H.455a.5.5 0 0 1-.5-.5v-2.273a5.045 5.045 0 0 1 8.757-3.419A5.927 5.927 0 0 1 12 8.318c1.216 0 2.347.365 3.29.99a5.045 5.045 0 0 1 8.756 3.419V15a.5.5 0 0 1-.5.5h-1.82l-.41 4.095a.5.5 0 0 1-.498.45h-3.636a.5.5 0 0 1-.498-.45l-.21-2.095zm1.005 0l.154 1.545h2.732l.41-4.095a.5.5 0 0 1 .497-.45h1.772v-1.773a4.045 4.045 0 0 0-6.97-2.795 5.938 5.938 0 0 1 1.88 4.34V17a.5.5 0 0 1-.475.5zm-8.46-7.187a.501.501 0 0 1-.168.134 4.945 4.945 0 0 0-1.807 3.826V16.5h2.228a.5.5 0 0 1 .497.45l.5 5.005h3.46l.5-5.005a.5.5 0 0 1 .497-.45h2.228v-2.227a4.955 4.955 0 0 0-7.934-3.96zm-1.096-.381a4.045 4.045 0 0 0-6.97 2.796V14.5h1.773a.5.5 0 0 1 .498.45l.41 4.095h2.73L6.52 17.5A.5.5 0 0 1 6.045 17v-2.727c0-1.712.723-3.255 1.88-4.341zM5 7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm7 1.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm7 .5a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">2 adults</div>
+                            </div>
+                            <div spacing="S" data-section="benefits-6" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 fvZryX">
+                                    <path
+                                            d="M17.942 3.206l-8.76 8.761-3.124-3.123a2 2 0 0 0-2.828 0L1 11.074a2 2 0 0 0 0 2.828l6.767 6.767a2 2 0 0 0 2.828 0L23 8.264a2 2 0 0 0 0-2.828l-2.23-2.23a2 2 0 0 0-2.828 0z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">Parking</div>
+                            </div>
+                            <div spacing="S" data-section="benefits-34" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 fvZryX">
+                                    <path
+                                            d="M17.942 3.206l-8.76 8.761-3.124-3.123a2 2 0 0 0-2.828 0L1 11.074a2 2 0 0 0 0 2.828l6.767 6.767a2 2 0 0 0 2.828 0L23 8.264a2 2 0 0 0 0-2.828l-2.23-2.23a2 2 0 0 0-2.828 0z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">Easy booking</div>
+                            </div>
+                            <div spacing="S" data-section="benefits-95" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 fvZryX">
+                                    <path
+                                            d="M17.942 3.206l-8.76 8.761-3.124-3.123a2 2 0 0 0-2.828 0L1 11.074a2 2 0 0 0 0 2.828l6.767 6.767a2 2 0 0 0 2.828 0L23 8.264a2 2 0 0 0 0-2.828l-2.23-2.23a2 2 0 0 0-2.828 0z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">WiFi service</div>
+                            </div>
+                            <div spacing="S" data-section="benefits-230" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 fvZryX">
+                                    <path
+                                            d="M17.942 3.206l-8.76 8.761-3.124-3.123a2 2 0 0 0-2.828 0L1 11.074a2 2 0 0 0 0 2.828l6.767 6.767a2 2 0 0 0 2.828 0L23 8.264a2 2 0 0 0 0-2.828l-2.23-2.23a2 2 0 0 0-2.828 0z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">Drinks</div>
+                            </div>
+                            <div spacing="S" data-section="benefits-115" wrap="nowrap"
+                                 class="Gridstyled__GridStyled-sc-dfh2k0-0 CPKEk">
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD"><svg width="1em" height="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                                       class="SvgIconstyled__SvgIconStyled-sc-1i6f60b-0 fvZryX">
+                                    <path
+                                            d="M17.942 3.206l-8.76 8.761-3.124-3.123a2 2 0 0 0-2.828 0L1 11.074a2 2 0 0 0 0 2.828l6.767 6.767a2 2 0 0 0 2.828 0L23 8.264a2 2 0 0 0 0-2.828l-2.23-2.23a2 2 0 0 0-2.828 0z">
+                                    </path>
+                                </svg></div>
+                                <div class="Itemstyled__Item-sc-12uga7p-0 dNbWUD">Gym</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script>
+
+
+
+        // Hàm cập nhật thông tin dịch vụ khi tích vào checkbox
+        function updateServiceInfo(checkbox) {
+            var label = checkbox.closest('label');
+            var quantityInput = label.find('input[type="number"]');
+            var servicePriceSpan = label.find("[name^='servicePrice']");
+            var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+            var check = label.find('input[type="checkbox"]');
+
+            var servicePrice = parseFloat(servicePriceSpan.text().trim());
+
+            if (checkbox.is(':checked')) {
+
+                quantityInput.prop('disabled', false); // Kích hoạt input số lượng
+                quantityInput.attr('readonly', false);
+
+                // Tính tổng giá tiền dịch vụ và cập nhật vào span
+                var quantity = parseInt(quantityInput.val());
+                if (isNaN(quantity) || quantity < 1) {
+                    quantity = 1;
+                    quantityInput.val(quantity);
+                }
+                var serviceTotalPrice = servicePrice * quantity;
+                totalServicePriceSpan.text(serviceTotalPrice.toFixed(0));
+
+
+            } else {
+
+                quantityInput.prop('disabled', true);
+                quantityInput.attr('readonly', true);
+
+                quantityInput.removeAttr('name');
+                // Nếu checkbox bị loại bỏ, đặt số lượng và tổng giá tiền về 0
+                quantityInput.val(0);
+                totalServicePriceSpan.text('0.00');
+
+
+            }
+        }
+
+        // Hàm cập nhật số lượng dịch vụ
+        function updateServiceQuantity(input) {
+            var label = input.closest('label');
+            var servicePriceSpan = label.find("[name^='servicePrice']");
+            var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+
+            var servicePrice = parseFloat(servicePriceSpan.text().trim());
+            var quantity = parseInt(input.val());
+
+            if (isNaN(quantity) || quantity < 1) {
+                quantity = 1;
+                input.val(quantity);
+            }
+
+            // Tính tổng giá tiền dịch vụ và cập nhật vào span
+            var serviceTotalPrice = servicePrice * quantity;
+            totalServicePriceSpan.text(serviceTotalPrice.toFixed(2));
+
+        }
+
+
+        // Hàm tính tổng giá tiền
+        function calculateTotalPrice() {
+            var totalPrice = parseFloat($("[name='totalPriceRoom']").text().trim());
+
+            $('input[type="checkbox"]:checked').each(function () {
+                var label = $(this).closest('label');
+                var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+                var serviceTotalPrice = parseFloat(totalServicePriceSpan.text().trim());
+
+                if (!isNaN(serviceTotalPrice)) {
+                    totalPrice += serviceTotalPrice;
+                }
+            });
+
+            $("#totalPriceField").val(totalPrice.toFixed(0));
+            $("#totalPrice").text(totalPrice.toFixed(0));
+        }
+        calculateTotalPrice();
+        //     Lắng nghe sự kiện thay đổi trạng thái của checkbox
+        $('input[type="checkbox"]').on('change', function () {
+            var checkbox = $(this);
+            updateServiceInfo(checkbox);
+            calculateTotalPrice();
+        });
+
+
+        // Lắng nghe sự kiện thay đổi số lượng
+        $('input[type="number"]').on('input', function () {
+            var input = $(this);
+            updateServiceQuantity(input);
+            calculateTotalPrice();
+        });
+        $('form').on('submit', function () {
+            // Duyệt qua tất cả các checkbox
+            $('input[type="checkbox"]').each(function () {
+                var checkbox = $(this);
+                var label = checkbox.closest('label');
+                var quantityInput = label.find('input[type="number"]');
+
+                // Kiểm tra checkbox có được chọn không
+                if (!checkbox.is(':checked')) {
+                    // Nếu checkbox không được chọn, xóa trường số lượng liên quan trước khi gửi biểu mẫu
+                    quantityInput.prop('disabled', true);
+                }
+            });
+        });
+
+
+
+    </script>
+</div>
+
+</body>
+
+</html>

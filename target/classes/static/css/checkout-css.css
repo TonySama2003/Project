@@ -1,0 +1,311 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+body {
+    font-family: "Poppins", Arial, sans-serif;
+}
+.inforBooking,.infoService,.infoRoom,.infoBill{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px;
+    border-radius: 0px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 223, 226);
+    padding: 25px;
+    position: relative;
+}
+
+.bookingContent {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+.content-left{
+    margin-right: 30px;
+    width: 666px;
+}
+.inforBooking{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.minus, .plus{
+    width:30px;
+    height:34px;
+    background:#f2f2f2;
+    border-radius:4px;
+    padding:6px 5px 6px 5px;
+    border:1px solid #ddd;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+.infoService ul li label input[type=number]{
+    height:34px;
+    width: 100px;
+    text-align: center;
+    border:1px solid #ddd;
+    border-radius:4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.wraper {
+    background-color: rgb(248, 247, 249);
+    border-radius: 8px;
+    margin-top: 8px;
+    padding: 16px 40px;
+    position: relative;
+}
+.wraper form ul li {
+    list-style-type: none;
+    padding: 10px 0px;
+}
+.wraper form ul li label span {
+    margin: 0px 10px 0px 0px;
+}
+.totalPrice {
+    padding: 15px 0px;
+    display: flex;
+    justify-content: end;
+    margin-right: 45px;
+}
+.submitButton {
+    display: flex;
+    justify-content: end;
+    margin-right: 35px;
+}
+.submitButton button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: rgb(83, 146, 249);
+    color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px;
+    transition: all 0.15s ease-in-out 0s;
+
+}
+.submitButton button:hover {
+    background-color: rgb(135, 179, 251);
+    border-color: rgb(135, 179, 251);
+    color: rgb(255, 255, 255);
+    transition: all 0.15s ease-in-out 0s;
+}
+.infoRoom {
+    display: flex;
+    flex-wrap: wrap;
+    width: 425px;
+    margin-bottom: 30px;
+}
+.devideStyleWraper{
+    width: 100%;
+    display: flex;
+    text-align: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    background-color: transparent;
+    padding: 12px 0px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.devidestyle{
+    min-width: 1px;
+    margin: 0px 8px;
+    width: 100%;
+    flex: 1 1 0%;
+    border-bottom: 1px solid rgb(221, 223, 226);
+}
+.contentRoom_header{
+    -webkit-tap-highlight-color: transparent;
+    color: inherit;
+    fill: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+    flex-direction: column;
+}
+.contentRoom_header1_info1{
+    -webkit-tap-highlight-color: transparent;
+    background: rgb(216, 245, 213);
+    border-radius: 2px;
+    color: inherit;
+    fill: inherit;
+    display: inline-flex;
+    text-align: start;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    align-self: flex-start;
+    height: 22px;
+    padding: 4px 8px;
+}.contentRoom_header1_info1 span {
+     margin: calc(-0.98px) 0px;
+     font-weight: 400;
+     color: rgb(40, 115, 50);
+     fill: rgb(40, 115, 50);
+     text-align: center;
+     display: -webkit-box;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     -webkit-line-clamp: 1;
+     -webkit-box-orient: vertical;
+     line-height: calc(14.98px);
+     font-size: 12px;
+ }
+.contentRoom_header1_info2{
+    -webkit-tap-highlight-color: transparent;
+    background: rgb(255, 222, 222);
+    border-radius: 2px;
+    color: inherit;
+    fill: inherit;
+    display: inline-flex;
+    text-align: start;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    align-self: flex-start;
+    height: 22px;
+    padding: 4px 8px;
+}
+.contentRoom_header1_info2 span{
+    margin: calc(-0.98px) 0px;
+    font-weight: 400;
+    color: rgb(194, 39, 0);
+    fill: rgb(194, 39, 0);
+    text-align: center;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-height: calc(14.98px);
+    font-size: 12px;
+}
+.contentRoom p {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 400;
+
+
+}
+.contentRoom_body p {
+    font-size: 15px;
+    line-height: 25px;
+    font-weight: 300;
+}
+.footerRoom {
+    margin-top: 8px;
+    padding: 8px;
+    display: inline-block;
+    background-color: rgb(249, 216, 216);
+}
+.footerRoomTitle {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    color: rgb(225, 45, 45);
+}
+.footerRoomContent{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+}
+.infoBill_title{
+    margin-bottom: 8px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+}
+
+.title_content {
+    margin-right: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    border-radius: 2px;
+    background-color: rgb(83, 146, 249);
+    color: rgb(255, 255, 255);
+}
+
+.title_content span {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+}
+.infoBillBooking {
+    box-sizing: border-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+
+    margin: -4px;
+    margin-top: 25px;
+    width: calc(100% + 8px);
+}
+.datecheckin_checkout {
+    box-sizing: border-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: -4px;
+    width: calc(100% + 8px);
+}
+.noDate {
+    display: flex;
+    white-space: nowrap;
+}
+.infoBill_body {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: -6px;
+    width: calc(100% + 12px);
+    margin-top: 15px;
+}
+.infoBill_body_left span {
+    font-size: 20px;
+    line-height: 22px;
+    font-weight: 500;
+    color: rgb(255 255 255);
+    font-family: kite-mallory, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-left: 20px;
+    background: #35e135;
+    padding: 12px;
+}
+.infoBill_body_left{
+    margin-right: 25px;
+}
+.CPKEk {
+    display: flex;
+    margin-bottom: 12px;
+
+}
+.fvZryX, .ibyDZc {
+    padding-right: 4px;
+    font-size: 20px;
+    fill: rgb(50, 169, 35);
+}
+.infomationRoom {
+    padding-left: 8px;
+    width: 215px;
+}
+li input[type="number"] {
+    margin-right: 20px;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="rooms.html">Booking</a></span>
+                            <span>Room Single</span></p>
+                        <h1 class="mb-4 bread">Booking</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bookingContent">
+        <div class="content-left">
+            <div class="inforBooking">
+                <h1>Booking Information</h1>
+
+                <!-- Hiển thị thông tin booking -->
+                <p style="display: none">Booking ID: <span th:text="${booking.getRoomId()}"></span></p>
+                <p><Strong>Room title:</Strong>  <span th:text="${room.title}"></span></p>
+                <p><Strong>Check-in Date:</Strong> <span th:text="${booking.getCheckinDate()}"></span></p>
+                <p><Strong>Checkout Date:</Strong> <span th:text="${booking.getCheckoutDate()}"></span></p>
+                <p><Strong>User Name:</Strong> <span th:text="${user.firstName}"></span></p>
+                <p><Strong>User Email:</Strong> <span th:text="${user.email}"></span></p>
+
+                <!-- Hiển thị thông tin người dùng -->
+
+                <p style="margin-top: 30px;"><Strong>Price Room :</Strong> $<span th:text="${totalPriceRoom}" name="totalPriceRoom"></span></p>
+            </div>
+            <div class="infoService">
+                <!-- Danh sách dịch vụ -->
+                <form th:action="@{/checkout}" method="post" th:object="${serviceForm}">
+                    <h2>Services:</h2>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="checkbox" th:field="*{selectedServices}" th:value="1" /> Ăn sáng
+                                <span><Strong><span>Giá tiền </span></Strong> - $<span name="servicePrice1">100</span></span>
+                                <input  disabled type="number" th:field="*{serviceQuantities}"name="serviceQuantity1" placeholder="Số lượng" min="0" data-checkbox="1"/>
+                                <span><Strong><span>Tổng tiền dịch vụ </span></Strong> : $<span name="totalServicePrice1"> </span></span>
+                                <!--                            <input type="hidden" th:field="*{totalServicePrices}" name="totalServicePrice1" value="0.00" />-->
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" th:field="*{selectedServices}" th:value="2" /> Ăn trưa
+                                <span><Strong><span>Giá tiền </span></Strong> - $<span name="servicePrice2">100</span></span>
+                                <input disabled type="number" th:field="*{serviceQuantities}"name="serviceQuantity2" placeholder="Số lượng" min="0"data-checkbox="2" />
+                                <span><Strong><span>Tổng tiền dịch vụ </span></Strong> : $<span name="totalServicePrice2"> </span></span>
+                                <!--                            <input type="hidden" th:field="*{totalServicePrices}" name="totalServicePrice2" value="0.00" />-->
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" th:field="*{selectedServices}" th:value="3" /> Ăn tối
+                                <span><Strong><span>Giá tiền </span></Strong> - $<span name="servicePrice3">100</span></span>
+                                <input disabled type="number" th:field="*{serviceQuantities}"name="serviceQuantity3" placeholder="Số lượng" min="0" data-checkbox="3" />
+                                <span><Strong><span>Tổng tiền dịch vụ </span></Strong> : $<span name="totalServicePrice3"> </span></span>
+                                <!--                            <input type="hidden" th:field="*{totalServicePrices}" name="totalServicePrice3" value="0.00" />-->
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" th:field="*{selectedServices}" th:value="4" /> Thêm Giường
+                                <span><Strong><span>Giá tiền </span></Strong> - $<span name="servicePrice4">500</span></span>
+                                <input disabled type="number" th:field="*{serviceQuantities}"name="serviceQuantity4" placeholder="Số lượng" min="0" data-checkbox="4" />
+                                <span><Strong><span>Tổng tiền dịch vụ </span></Strong> : $<span name="totalServicePrice4">0.00 </span></span>
+                                <!--                            <input type="hidden" th:field="*{totalServicePrices}" name="totalServicePrice4" value="0.00" th:if="${selectedServices != null}" />-->
+                            </label>
+                        </li>
+                        <!-- Thêm các checkbox cho các dịch vụ khác -->
+                    </ul>
+
+                    <!-- Tổng giá tiền -->
+                    <input type="hidden" id="totalPriceField" name="totalPrice" value="0.00" />
+                    <p><u><Strong>Total Price:</Strong></u> $<span id="totalPrice">0.00</span></p>
+
+                    <!-- Nút xác nhận -->
+                    <button type="submit">Confirm</button>
+                </form>
+            </div>
+        </div>
+        <div class="content-right">
+            <div>Ảnh</div>
+            <div>Thông tin giá tiền</div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        //     Lắng nghe sự kiện thay đổi trạng thái của checkbox
+            $('input[type="checkbox"]').on('change', function () {
+                var checkbox = $(this);
+                updateServiceInfo(checkbox);
+                calculateTotalPrice();
+            });
+
+// Lắng nghe sự kiện thay đổi số lượng
+            $('input[type="number"]').on('change', function () {
+                var input = $(this);
+                updateServiceQuantity(input);
+                calculateTotalPrice();
+            });
+
+// Hàm cập nhật thông tin dịch vụ khi tích vào checkbox
+            function updateServiceInfo(checkbox) {
+                var label = checkbox.closest('label');
+                var quantityInput = label.find('input[type="number"]');
+                var servicePriceSpan = label.find("[name^='servicePrice']");
+                var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+
+                var servicePrice = parseFloat(servicePriceSpan.text().trim());
+
+                if (checkbox.is(':checked')) {
+                    quantityInput.prop('disabled', false); // Kích hoạt input số lượng
+                    // Tính tổng giá tiền dịch vụ và cập nhật vào span
+                    var quantity = parseInt(quantityInput.val());
+                    if (isNaN(quantity) || quantity < 1) {
+                        quantity = 1;
+                        quantityInput.val(quantity);
+                    }
+                    var serviceTotalPrice = servicePrice * quantity;
+                    totalServicePriceSpan.text(serviceTotalPrice.toFixed(0));
+
+
+                } else {
+                    quantityInput.prop('disabled', true);
+                    quantityInput.attr('readonly', true);
+                    quantityInput.removeAttr('name');
+                    // Nếu checkbox bị loại bỏ, đặt số lượng và tổng giá tiền về 0
+                    quantityInput.val(0);
+                    totalServicePriceSpan.text('0.00');
+
+
+                }
+            }
+
+// Hàm cập nhật số lượng dịch vụ
+            function updateServiceQuantity(input) {
+                var label = input.closest('label');
+                var servicePriceSpan = label.find("[name^='servicePrice']");
+                var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+
+                var servicePrice = parseFloat(servicePriceSpan.text().trim());
+                var quantity = parseInt(input.val());
+
+                if (isNaN(quantity) || quantity < 1) {
+                    quantity = 1;
+                    input.val(quantity);
+                }
+
+                // Tính tổng giá tiền dịch vụ và cập nhật vào span
+                var serviceTotalPrice = servicePrice * quantity;
+                totalServicePriceSpan.text(serviceTotalPrice.toFixed(2));
+
+            }
+
+
+// Hàm tính tổng giá tiền
+            function calculateTotalPrice() {
+                var totalPrice = parseFloat($("[name='totalPriceRoom']").text().trim());
+
+                $('input[type="checkbox"]:checked').each(function () {
+                    var label = $(this).closest('label');
+                    var totalServicePriceSpan = label.find("[name^='totalServicePrice']");
+                    var serviceTotalPrice = parseFloat(totalServicePriceSpan.text().trim());
+
+                    if (!isNaN(serviceTotalPrice)) {
+                        totalPrice += serviceTotalPrice;
+                    }
+                });
+
+                $("#totalPriceField").val(totalPrice.toFixed(2));
+                $("#totalPrice").text(totalPrice.toFixed(2));
+            }
+            calculateTotalPrice();
+        $('form').on('submit', function() {
+            // Duyệt qua tất cả các checkbox
+            $('input[type="checkbox"]').each(function() {
+                var checkbox = $(this);
+                var label = checkbox.closest('label');
+                var quantityInput = label.find('input[type="number"]');
+
+                // Kiểm tra checkbox có được chọn không
+                if (!checkbox.is(':checked')) {
+                    // Nếu checkbox không được chọn, xóa trường số lượng liên quan trước khi gửi biểu mẫu
+                    quantityInput.prop('disabled', true);
+                }
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>

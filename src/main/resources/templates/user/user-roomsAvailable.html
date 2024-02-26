@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Cụ Thể</title>
+</head>
+<body>
+
+<!-- Nội dung của trang con -->
+<div class="content" th:fragment="content">
+
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2"><span class="mr-2"><a href="/">Home</a></span>
+                            <span>rooms</span></p>
+                        <h1 class="mb-4 bread">Rooms</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="ftco-section bg-light">
+
+        <div class="container">
+            <div class="alert alert-success" role="alert" th:if="${messages}">
+                <p th:text="${messages}"></p>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-sm col-md-6 col-lg-4 ftco-animate"th:each="tempRoom : ${rooms}">
+                            <div class="room">
+                                <a th:href="@{/roomSingleAvailable(roomId=${tempRoom.room.id},roomsAvailable=${tempRoom.roomsAvailable})}" class="img d-flex justify-content-center align-items-center"
+                                   th:style="'background-image: url(\''+@{'/images/roomImg/'+${tempRoom.room.roomImg}}+'\');'">
+                                    <div class="icon d-flex justify-content-center align-items-center">
+                                        <span class="icon-search2"></span>
+                                    </div>
+                                </a>
+                                <div class="text p-3 text-center">
+                                    <h3 class="mb-3"><a th:href="@{/roomSingleAvailable(roomId=${tempRoom.room.id},roomsAvailable=${tempRoom.roomsAvailable})}" th:text="${tempRoom.room.title}"></a></h3>
+                                    <h5><span th:text="${tempRoom.roomsAvailable}"></span> <sub>rooms</sub></h5>
+                                    <p><span class="price mr-2">$<span th:text="${tempRoom.room.priceOneNight}"></span></span> <span class="per">per night</span></p>
+                                    <ul class="list">
+                                        <li><span>Max: </span><span th:text="${tempRoom.room.roomMax}"></span><span> Persons</span></li>
+                                        <li><span>Size: </span><span th:text="${tempRoom.room.roomSize}"></span><span> m2</span></li>
+                                        <li><span>View: </span><span th:text="${tempRoom.room.type}"></span></li>
+                                        <li><span>Bed: </span><span th:text="${tempRoom.room.roomBed}"></span></li>
+                                    </ul>
+                                    <hr>
+                                    <p class="pt-1"><a th:href="@{/roomSingleAvailable(roomId=${tempRoom.room.id},roomsAvailable=${tempRoom.roomsAvailable})}" class="btn-custom">Book Now <span
+                                            class="icon-long-arrow-right"></span></a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 sidebar">
+                    <div class="sidebar-wrap bg-light ftco-animate">
+                        <h3 class="heading mb-4">Advanced Search</h3>
+                        <form th:action="@{/checkAvailableByNoRoom}" method="post">
+                            <div class="fields">
+                                <div class="form-group">
+                                    <input type="text" name="checkinDate" id="checkin_date" class="form-control checkin_date"
+                                           placeholder="Check In Date">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="checkoutDate" id="checkin_date" class="form-control checkout_date"
+                                           placeholder="Check Out Date">
+                                </div>
+                                <div class="form-group">
+                                    <div class="select-wrap one-third">
+                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                        <select name="roomQuantity" id="" class="form-control">
+                                            <option value="1">1 Room</option>
+                                            <option value="2">2 Room</option>
+                                            <option value="3">3 Room</option>
+                                            <option value="4">4 Room</option>
+                                            <option value="5">5 Room</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sidebar-wrap bg-light ftco-animate">
+                        <h3 class="heading mb-4">Star Rating</h3>
+                        <form method="post" class="star-rating">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                                            class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>
+                                    </p>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                                            class="icon-star"></i><i class="icon-star"></i><i
+                                            class="icon-star-o"></i></span></p>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                                            class="icon-star"></i><i class="icon-star-o"></i><i
+                                            class="icon-star-o"></i></span></p>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                                            class="icon-star-o"></i><i class="icon-star-o"></i><i
+                                            class="icon-star-o"></i></span></p>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    <p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i
+                                            class="icon-star-o"></i><i class="icon-star-o"></i><i
+                                            class="icon-star-o"></i></span></p>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+</body>
+</html>

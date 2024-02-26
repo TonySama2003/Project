@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+body {
+
+    font-family: "Poppins", Arial, sans-serif;
+}
+.bookingContent {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.inforBooking{
+    width: 500px;
+}
+.inforBooking h1 {
+    margin-bottom: 25px;
+}
+.inforBooking p {
+    padding-left: 15px;
+}
+.infoService ul li {
+    list-style-type: none;
+    margin-bottom: 2px;
+}
+.infoService h2 {
+    margin-top: 73px;
+    margin-bottom: 20px;
+}
+.infoService button {
+    padding: 7px 56px;
+    font-weight: 500;background: #8d703b;
+    border: 1px solid #8d703b;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.infoService button:hover {
+    border: 1px solid #8d703b;
+    background: transparent;
+    color: #8d703b;
+}

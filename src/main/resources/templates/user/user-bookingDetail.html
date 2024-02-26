@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a
+                                href="rooms.html">Booking</a></span>
+                            <span>Booking Detail</span>
+                        </p>
+                        <h1 class="mb-4 bread">Booking Detail</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bookingContent">
+        <div class="content-left" style="width: 90%;">
+            <div class="inforBooking">
+                <h2 style="color: #8d703b;">Thông tin booking  </h2>
+                <div class="wraper" style="color: #8d703b;">
+                    <table class="table table-bordered table hover">
+
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Booking Code</th>
+                            <th>User :</th>
+                            <th>Created Date</th>
+                            <th>Checkin - checkout</th>
+                            <th>Room</th>
+                            <th>Service</th>
+                            <th>Total Price</th>
+
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${bookings}">
+                            <td th:text="${booking.bookingCode}">Booking </td>
+                            <td th:text="${booking.appUser.firstName+' '+booking.appUser.lastName}">Booking ID</td>
+                            <td th:text="${booking.createDate}">Created Date</td>
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" th:text="${bookingdetail.checkinDate+' To '+bookingdetail.checkoutDate}"></td>
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" th:text="${bookingdetail.room.title}"></td>
+                            <td th:each="bookingdetail : ${booking.bookingDetails}" style="padding-left: 23px;">
+                                <div th:if="${bookingdetail.bookingDetailServicesHotels.size() != 0 }">
+                                    <ul>
+                                        <li th:each="service : ${bookingdetail.bookingDetailServicesHotels}" th:text="${service.serviceHotel.serviceName}" style="list-style-type: decimal;padding-left: 5px;white-space: nowrap;"></li>
+                                    </ul>
+                                </div>
+                                <div th:unless="${bookingdetail.bookingDetailServicesHotels.size() != 0}">
+                                    <p>none</p>
+                                </div>
+                            </td>
+                            <td th:text="${booking.totalPrice}">Total Price</td>
+
+                            <td>
+                                <a th:href="@{'/admin/bookings/' + ${booking.id}}" th:text="'View'">View</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+</body>
+
+</html>

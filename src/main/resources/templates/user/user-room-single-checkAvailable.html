@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" th:fragment="content">
+    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                                class="mr-2"><a href="/">Home</a></span> <span class="mr-2"><a href="/rooms">Room</a></span>
+                            <span>Room Single</span></p>
+                        <h1 class="mb-4 bread">Room Single</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="ftco-section">
+
+        <div class="row">
+        <div class="container" th:if="${room != null }">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-12 ftco-animate">
+                            <h2 class="mb-4" th:text="${room.title}"></h2>
+                            <h4>Number of available rooms : <span th:text="${roomsAvailable}"></span></h4>
+                            <div class="single-slider owl-carousel">
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                                <div class="item">
+                                    <div class="room-img" th:style="'background-image: url(\''+@{'/images/roomImg/'+${room.roomImg}}+'\');'"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
+                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the
+                                skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of
+                                her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she
+                                continued her way.</p>
+                            <div class="d-md-flex mt-5 mb-5">
+                                <ul class="list">
+                                    <li><span>Max:</span> <span th:text="${room.roomMax}"></span> Persons</li>
+                                    <li><span>Size:</span> <span th:text="${room.roomSize}"></span> m2</li>
+                                </ul>
+                                <ul class="list ml-md-5">
+                                    <li><span>View:</span> <span th:text="${room.type}"></span></li>
+                                    <li><span>Bed:</span> <span th:text="${room.roomBed}"></span></li>
+                                </ul>
+                            </div>
+                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the
+                                skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of
+                                her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she
+                                continued her way.</p>
+                        </div>
+                        <div class="col-md-12 room-single ftco-animate mb-5 mt-4">
+                            <h3 class="mb-4">Take A Tour</h3>
+                            <div class="block-16">
+                                <figure>
+                                    <img src="images/room-4.jpg" alt="Image placeholder" class="img-fluid">
+                                    <a href="https://vimeo.com/45830194" class="play-button popup-vimeo"><span
+                                            class="icon-play"></span></a>
+                                </figure>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div> <!-- .col-md-8 -->
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box">
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 sidebar">
+                        <div class="alert alert-success" role="alert" th:if="${messages}" style="height: 50px;">
+                            <p th:text="${messages}" style="position: absolute;"></p>
+                        </div>
+                        <div class="sidebar-wrap bg-light ftco-animate">
+                            <h6 style="font-size: 30px" class="heading mb-4">Book Now!</h6>
+                            <form th:action="@{/bookNow}" method="post">
+                                <div class="fields" th:if="${room != null }" >
+                                    <input type="hidden" name="roomId" th:value="${room.id}">
+                                    <div class="form-group">
+                                        <input type="text" name="checkinDate" id="checkinDate" class="form-control checkin_date"
+                                               placeholder="Check In Date" th:value="${#session.getAttribute('checkinDate') != null ?  #dates.format(#session.getAttribute('checkinDate'), 'MM/dd/yyyy') : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="checkoutDate" id="checkoutDate" class="form-control checkout_date"
+                                               placeholder="Check Out Date" th:value="${#session.getAttribute('checkoutDate') != null ?  #dates.format(#session.getAttribute('checkoutDate'), 'MM/dd/yyyy') : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="select-wrap one-third">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select name="numberGuest" id="" class="form-control">
+                                                <option value="1">1 Guest</option>
+                                                <option value="2">2 Guests</option>
+                                                <option value="3">3 Guests</option>
+                                                <option value="4">4 Guests</option>
+                                                <option value="5">5 Guests</option>
+                                                <option value="6">6 Guests</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="select-wrap one-third">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select name="roomQuantity" id="" class="form-control">
+                                                <option th:each="quantity : ${#numbers.sequence(1, roomsAvailable)}" th:value="${quantity}" th:text="${quantity + ' Room'}"></option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary py-3 px-5" type="submit">Book Now!</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </section> <!-- .section -->
+
+
+    <section class="instagram pt-5">
+        <div class="container-fluid">
+            <div class="row no-gutters justify-content-center pb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2><span>Instagram</span></h2>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-1.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-1.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-2.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-2.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-3.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-3.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-4.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-4.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="images/insta-5.jpg" class="insta-img image-popup"
+                       style="background-image: url(images/insta-5.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

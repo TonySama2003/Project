@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" th:fragment="container-fluid">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/index">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/services">Service</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Update Service</li>
+            </ol>
+        </nav>
+
+        <hr/>
+        <p class="h4 mb-4">Update Service</p>
+        <form th:action="@{/admin/updateService}"
+              th:object="${service}" method="POST"  >
+            <input type="hidden" th:field="*{id}"/>
+            <div>
+                <label for="serviceName">Service Title :</label>
+                <input type="text" th:field="*{serviceName}" id="serviceName" name="serviceName" class="form-control mb-4 col-4" placeholder="Title">
+                <span th:if="${#fields.hasErrors('serviceName')}" th:errors="*{serviceName}"></span>
+            </div>
+            <div>
+                <label for="servicePrice">Price :</label>
+                <input type="text" th:field="*{servicePrice}" id="servicePrice" name="servicePrice" class="form-control mb-4 col-4" placeholder="0.0">
+                <span th:if="${#fields.hasErrors('servicePrice')}" th:errors="*{servicePrice}"></span>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-info col-2">Save</button>
+        </form>
+        <hr/>
+        <a th:href="@{/admin/services}">Back to Service List</a>
+    </div>
+</div>
+</body>
+</html>
